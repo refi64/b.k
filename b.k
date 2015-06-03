@@ -2,7 +2,7 @@ p:,/0:`
 / remove non-valid chars
 / the interpreter is slightly slower without this
 / (it's pretty slow regardless, though...)
-pm:{~7=("+";"-";"<";">";"[";"]";".")?x}'p
+pm:{~7="+-<>[]."?x}'p
 p:(pm[>pm]?0)#p@>pm
 / build the bracket map (bm)
 bm:(#p)#0
