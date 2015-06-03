@@ -14,7 +14,5 @@ pc:0
 t:,0
 / tape pointer
 tp:0
-/ a helper to increment the tape
-it:{tp+:1;t,:(tp=#t)#0}
-/ the main loop (a glorious, 152-character line)
-while[pc<#p;c:p@pc;:[c="+";t[tp]+:1;c="-";t[tp]-:1;c="<";tp-:1;c=">";it[];c="[";:[t[tp]=0;pc:bm@pc];c="]";:[~t[tp]=0;pc:bm@pc];c=".";`0:_ci t@tp];pc+:1]
+/ the main loop (a glorious, 165-character line)
+while[pc<#p;c:p@pc;:[c="+";t[tp]+:1;c="-";t[tp]-:1;c="<";tp-:1;c=">";t,:((#t)=tp+:1)#0;c="[";:[t[tp]=0;pc:bm@pc];c="]";:[~t[tp]=0;pc:bm@pc];c=".";`0:_ci t@tp];pc+:1]

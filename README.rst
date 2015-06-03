@@ -16,4 +16,4 @@ We all know what this language is *really* called. ;)
 
 This interpreter is by no means fast...but it works. Pretty well, too, except that I didn't implement the ``,`` character because, as far as I know, reading a single character isn't possible with K unless you resort to C extensions. It's written for `Kona <https://github.com/kevinlawler/kona>`_, NOT kdb+ 3.0. It will NOT run under kdb+ 3.0 (if you figure out how without using q, let me know!).
 
-The whole thing is (without comments and blank lines) 309 characters (299 if you remove all the newlines).
+The whole thing is (without comments and blank lines) 298 characters (289 if you remove all the newlines).
