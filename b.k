@@ -1,18 +1,29 @@
-p:,/0:`
-/ remove non-valid chars
-/ the interpreter is slightly slower without this
-/ (it's pretty slow regardless, though...)
-p@:&~{7="+-<>[]."?x}'p
-/ build the bracket map (bm)
-bm:(#p)#0
-l:()
-{c:p@x;:[c="[";l,:x;c="]";{e:*-1#l;l::-1 _ l;bm[x]:e;bm[e]:x}[x]]}'!#p
+p:,/0:`"/dev/stdin" / read the input
+p:?["+-<>[].";]'p / give each char it's character id
+p@:&~7=p / filter out non-valid chars
 
-/ program counter
-pc:0
-/ tape
-t:,0
-/ tape pointer
-tp:0
-/ the main loop (a glorious, 165-character line)
-while[pc<#p;c:p@pc;:[c="+";t[tp]+:1;c="-";t[tp]-:1;c="<";tp-:1;c=">";t,:((#t)=tp+:1)#0;c="[";:[t[tp]=0;pc:bm@pc];c="]";:[~t[tp]=0;pc:bm@pc];c=".";`0:_ci t@tp];pc+:1]
+/ build the bracket map (bm)
+bm:(#p)#0 / generate an empty set of cells
+l:() / left stack
+{
+  c:p@x / get the current op
+  / if it's a left bracket, add it to the left stack
+  / if it's a right bracket, pop one off the left stack and assign the brackets
+  :[c=4;l,:x;c=5;{e:*-1#l;l::-1_ l;bm[x]:e;bm[e]:x}x]
+}'!#p; / for each index in the program
+
+pc:0 / program counter
+t:,0 / tape
+tp:0 / tape pointer
+
+/ dispatch functions
+oi:{t[tp]+:1} / +
+od:{t[tp]-:1} / -
+of:{tp-:1} / <
+ob:{tp+:1;:[tp=#t;t,:0]} / >
+ol:{:[t[tp]=0;pc::bm@pc]} / [
+or:{:[~t[tp]=0;pc::bm@pc]} / ]
+op:{`0:_ci t@tp} / .
+
+disp:(oi;od;of;ob;ol;or;op) / dispatch table
+while[pc<#p;disp[p@pc][];pc+:1] / main loop
