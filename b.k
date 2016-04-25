@@ -21,7 +21,7 @@ tp:0 / tape pointer
 oi:{t[tp]+:1} / +
 od:{t[tp]-:1} / -
 of:{tp-:1} / <
-ob:{tp+:1;:[tp=#t;t,:0]} / >
+ob:{tp+:1;if[tp=#t;t,:0]} / >
 ol:{if[t[tp]=0;pc::bm@pc]} / [
 or:{if[~t[tp]=0;pc::bm@pc]} / ]
 op:{`0:_ci t@tp} / .
