@@ -22,8 +22,8 @@ oi:{t[tp]+:1} / +
 od:{t[tp]-:1} / -
 of:{tp-:1} / <
 ob:{tp+:1;:[tp=#t;t,:0]} / >
-ol:{:[t[tp]=0;pc::bm@pc]} / [
-or:{:[~t[tp]=0;pc::bm@pc]} / ]
+ol:{if[t[tp]=0;pc::bm@pc]} / [
+or:{if[~t[tp]=0;pc::bm@pc]} / ]
 op:{`0:_ci t@tp} / .
 
 disp:(oi;od;of;ob;ol;or;op) / dispatch table
