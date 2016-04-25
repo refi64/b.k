@@ -5,12 +5,13 @@ p@:&~7=p / filter out non-valid chars
 / build the bracket map (bm)
 bm:(#p)#0 / generate an empty set of cells
 l:() / left stack
-{
-  c:p@x / get the current op
-  if[c=4;l,:x] / if it's a left bracket, add it to the left stack
+i:0
+do[#p / for each index in the program
+  c:p@i / get the current op
+  if[c=4;l,:i] / if it's a left bracket, add it to the left stack
   / if right bracket, pop one off the left stack and assign the indexes
-  if[c=5;e:*-1#l;l::-1_ l;bm[x]:e;bm[e]:x]
-}'!#p; / for each index in the program
+  if[c=5;e:*-1#l;l::-1_ l;bm[i]:e;bm[e]:i]
+  i+:1]
 
 pc:0 / program counter
 t:,0 / tape
