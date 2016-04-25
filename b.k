@@ -1,5 +1,5 @@
 p:,/0:`"/dev/stdin" / read the input
-p:?["+-<>[].";]'p / give each char it's character id
+p:{"+-<>[]."?x}'p / give each char it's character id
 p@:&~7=p / filter out non-valid chars
 
 / build the bracket map (bm)
@@ -7,9 +7,9 @@ bm:(#p)#0 / generate an empty set of cells
 l:() / left stack
 {
   c:p@x / get the current op
-  / if it's a left bracket, add it to the left stack
-  / if it's a right bracket, pop one off the left stack and assign the brackets
-  :[c=4;l,:x;c=5;{e:*-1#l;l::-1_ l;bm[x]:e;bm[e]:x}x]
+  if[c=4;l,:x] / if it's a left bracket, add it to the left stack
+  / if right bracket, pop one off the left stack and assign the indexes
+  if[c=5;e:*-1#l;l::-1_ l;bm[x]:e;bm[e]:x]
 }'!#p; / for each index in the program
 
 pc:0 / program counter
@@ -27,3 +27,5 @@ op:{`0:_ci t@tp} / .
 
 disp:(oi;od;of;ob;ol;or;op) / dispatch table
 while[pc<#p;disp[p@pc][];pc+:1] / main loop
+
+_exit 0
